@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    h1= 'Treehouse Library'
+        p
+            a(class="button" href="/books/new-book") Create New Book
+    table
+        thead
+            tr
+                th Title
+                th Author
+                th Genre
+                th Year
+            each book in books
+                tr
+                    td
+                        a(href="/books/"+book.id)= book.title
+                    td= book.author
+                    td= book.genre
+                    td= book.year
