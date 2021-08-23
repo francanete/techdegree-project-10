@@ -26,6 +26,8 @@ app.use('/books', booksRouter);
 let sequelize = require('./models').sequelize;
 
 
+/*  Error handler  */
+
 app.use((req, res, next) => {
   console.log('404 error handler called');
   const err = new Error();
