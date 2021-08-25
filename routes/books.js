@@ -52,7 +52,12 @@ router.get("/:id", asyncHandler(async (req, res) => {
     if(book) {
       res.render("update-book", { book, title: book.title });  
     } else {
-      res.sendStatus(404);
+      // res.sendStatus(404);
+
+      const err = new Error();
+      err.status= 404;
+      err.message = `Looks like this book doesn't exist.`
+      next(err);
     }
   })); 
 
@@ -66,6 +71,7 @@ router.post('/:id/', asyncHandler(async (req, res) => {
         res.redirect("/"); 
       } else {
         res.sendStatus(404);
+        
       }
     } catch (error) {
       if(error.name === "SequelizeValidationError") {
