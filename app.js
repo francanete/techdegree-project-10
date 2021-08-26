@@ -30,33 +30,23 @@ let sequelize = require('./models').sequelize;
 
 app.use((req, res, next) => {
   console.log('404 error handler called');
-  // const err = new Error();
-  // err.status = 404;
-  // err.message = "Sorry!  It looks like the page you're looking for does not exist.";
-
-  // next(err);
 
   res.status(404).render('page-not-found');
-
-
-
 });
 
 
-
-
 /* Global error handler */
-app.use((err, req, res, next) => {
 
-  // if (err) {
-  //   console.log('Global error handler called', err);
-  // }
-  if (err.status === 404) {
-      res.status(404).render('page-not-found', { err });
+app.use(function(err, req, res, next) {
+
+  if (err.status===404){
+    res.render('page-not-found', {error:err})
   } else {
-      err.message = err.message || 'Sorry! It looks like something went wrong on the server.';
-      res.status(err.status || 500).render('error', {err});
+    err.message = err.message || "Sorry! There was an unexpected error on the server.";
+    res.render('error', {error:err});
+    res.status(err.status || 500).render('error', {err});
   }
+
 });
 
 

@@ -47,16 +47,16 @@ router.post('/new-book', asyncHandler(async (req, res) => {
 
 
 // /* GET update book */ 
-router.get("/:id", asyncHandler(async (req, res) => {
+router.get("/:id", asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
+    
     if(book) {
       res.render("update-book", { book, title: book.title });  
     } else {
-      // res.sendStatus(404);
 
       const err = new Error();
       err.status= 404;
-      err.message = `Looks like this book doesn't exist.`
+      err.message = `Looks like this book doesn't exist.`;
       next(err);
     }
   })); 
